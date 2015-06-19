@@ -10,6 +10,7 @@ package com.whizzosoftware.hobson.actions;
 import com.whizzosoftware.hobson.api.event.HobsonEvent;
 import com.whizzosoftware.hobson.api.plugin.AbstractHobsonPlugin;
 import com.whizzosoftware.hobson.api.property.PropertyContainer;
+import com.whizzosoftware.hobson.api.property.TypedProperty;
 
 /**
  * A plugin that registers some "core" actions with the runtime.
@@ -24,6 +25,11 @@ public class ActionsPlugin extends AbstractHobsonPlugin implements EventSink {
     @Override
     public String getName() {
         return "Hobson Actions";
+    }
+
+    @Override
+    protected TypedProperty[] createSupportedProperties() {
+        return null;
     }
 
     @Override
