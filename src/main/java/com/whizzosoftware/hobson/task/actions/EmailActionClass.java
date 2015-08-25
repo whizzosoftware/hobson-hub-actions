@@ -5,13 +5,13 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
-package com.whizzosoftware.hobson.actions;
+package com.whizzosoftware.hobson.task.actions;
 
 import com.whizzosoftware.hobson.api.hub.HubManager;
 import com.whizzosoftware.hobson.api.plugin.PluginContext;
 import com.whizzosoftware.hobson.api.property.PropertyContainer;
 import com.whizzosoftware.hobson.api.property.TypedProperty;
-import com.whizzosoftware.hobson.api.task.TaskActionClass;
+import com.whizzosoftware.hobson.api.task.action.TaskActionClass;
 import com.whizzosoftware.hobson.api.task.action.TaskActionExecutor;
 
 import java.util.ArrayList;
@@ -26,20 +26,10 @@ public class EmailActionClass extends TaskActionClass implements TaskActionExecu
     private HubManager hubManager;
 
     public EmailActionClass(PluginContext context, HubManager hubManager) {
-        super(context, "email", "Send an e-mail");
+        super(context, "email", "Send an e-mail", "Send an e-mail to {" + RECIPIENT_ADDRESS + "} with subject {" + SUBJECT + "}");
 
         this.hubManager = hubManager;
     }
-
-    @Override
-    public List<TypedProperty> createProperties() {
-        List<TypedProperty> props = new ArrayList<>();
-        props.add(new TypedProperty(RECIPIENT_ADDRESS, "Recipient Address", "The e-mail address to send the message to", TypedProperty.Type.STRING));
-        props.add(new TypedProperty(SUBJECT, "Subject", "The e-mail subject line", TypedProperty.Type.STRING));
-        props.add(new TypedProperty(MESSAGE, "Message", "The e-mail body text", TypedProperty.Type.STRING));
-        return props;
-    }
-
 
     @Override
     public TaskActionExecutor getExecutor() {
@@ -57,5 +47,14 @@ public class EmailActionClass extends TaskActionClass implements TaskActionExecu
             (String)propertyValues.get(SUBJECT),
             (String)propertyValues.get(MESSAGE)
         );
+    }
+
+    @Override
+    protected List<TypedProperty> createProperties() {
+        List<TypedProperty> props = new ArrayList<>();
+        props.add(new TypedProperty(RECIPIENT_ADDRESS, "Recipient Address", "The e-mail address to send the message to", TypedProperty.Type.STRING));
+        props.add(new TypedProperty(SUBJECT, "Subject", "The e-mail subject line", TypedProperty.Type.STRING));
+        props.add(new TypedProperty(MESSAGE, "Message", "The e-mail body text", TypedProperty.Type.STRING));
+        return props;
     }
 }

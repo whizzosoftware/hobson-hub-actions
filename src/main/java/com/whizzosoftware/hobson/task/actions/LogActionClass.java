@@ -5,12 +5,12 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
-package com.whizzosoftware.hobson.actions;
+package com.whizzosoftware.hobson.task.actions;
 
 import com.whizzosoftware.hobson.api.plugin.PluginContext;
 import com.whizzosoftware.hobson.api.property.PropertyContainer;
 import com.whizzosoftware.hobson.api.property.TypedProperty;
-import com.whizzosoftware.hobson.api.task.TaskActionClass;
+import com.whizzosoftware.hobson.api.task.action.TaskActionClass;
 import com.whizzosoftware.hobson.api.task.action.TaskActionExecutor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,14 +29,7 @@ public class LogActionClass extends TaskActionClass implements TaskActionExecuto
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     public LogActionClass(PluginContext context) {
-        super(context, "log", "Log a message");
-    }
-
-    @Override
-    public List<TypedProperty> createProperties() {
-        List<TypedProperty> props = new ArrayList<>();
-        props.add(new TypedProperty("message", "Message", "The message added to the log file", TypedProperty.Type.STRING));
-        return props;
+        super(context, "log", "Log a message", "Log \"{message}\"");
     }
 
     @Override
@@ -52,5 +45,12 @@ public class LogActionClass extends TaskActionClass implements TaskActionExecuto
         } else {
             logger.error("No log message specified; unable to execute log action");
         }
+    }
+
+    @Override
+    protected List<TypedProperty> createProperties() {
+        List<TypedProperty> props = new ArrayList<>();
+        props.add(new TypedProperty("message", "Message", "The message added to the log file", TypedProperty.Type.STRING));
+        return props;
     }
 }

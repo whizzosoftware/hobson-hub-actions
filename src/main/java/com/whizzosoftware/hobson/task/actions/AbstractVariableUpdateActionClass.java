@@ -5,14 +5,14 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
-package com.whizzosoftware.hobson.actions;
+package com.whizzosoftware.hobson.task.actions;
 
 import com.whizzosoftware.hobson.api.HobsonRuntimeException;
 import com.whizzosoftware.hobson.api.device.DeviceContext;
 import com.whizzosoftware.hobson.api.event.VariableUpdateRequestEvent;
 import com.whizzosoftware.hobson.api.plugin.PluginContext;
 import com.whizzosoftware.hobson.api.property.PropertyContainer;
-import com.whizzosoftware.hobson.api.task.TaskActionClass;
+import com.whizzosoftware.hobson.api.task.action.TaskActionClass;
 import com.whizzosoftware.hobson.api.task.action.TaskActionExecutor;
 import com.whizzosoftware.hobson.api.variable.VariableUpdate;
 
@@ -30,8 +30,8 @@ import java.util.Map;
 abstract public class AbstractVariableUpdateActionClass extends TaskActionClass implements TaskActionExecutor {
     private EventSink eventSink;
 
-    public AbstractVariableUpdateActionClass(PluginContext context, String id, String name, EventSink eventSink) {
-        super(context, id, name);
+    public AbstractVariableUpdateActionClass(PluginContext context, String id, String name, String descriptionTemplate, EventSink eventSink) {
+        super(context, id, name, descriptionTemplate);
         this.eventSink = eventSink;
     }
 

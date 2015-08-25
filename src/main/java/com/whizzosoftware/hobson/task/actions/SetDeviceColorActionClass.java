@@ -5,7 +5,7 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
-package com.whizzosoftware.hobson.actions;
+package com.whizzosoftware.hobson.task.actions;
 
 import com.whizzosoftware.hobson.api.plugin.PluginContext;
 import com.whizzosoftware.hobson.api.property.TypedProperty;
@@ -26,14 +26,7 @@ public class SetDeviceColorActionClass extends AbstractVariableUpdateActionClass
     public static final String COLOR = "color";
 
     public SetDeviceColorActionClass(PluginContext context, EventSink eventSink) {
-        super(context, "setColor", "Set bulb colors", eventSink);
-    }
-
-    public List<TypedProperty> createProperties() {
-        List<TypedProperty> props = new ArrayList<>();
-        props.add(new TypedProperty("devices", "Devices", "The devices to send the command to", TypedProperty.Type.DEVICES, Collections.singletonMap(TypedPropertyConstraint.deviceVariable, VariableConstants.COLOR)));
-        props.add(new TypedProperty(COLOR, "Color", "The color to set", TypedProperty.Type.COLOR));
-        return props;
+        super(context, "setColor", "Set bulb colors", "Set {devices} to {" + COLOR + "}", eventSink);
     }
 
     @Override
@@ -44,5 +37,12 @@ public class SetDeviceColorActionClass extends AbstractVariableUpdateActionClass
     @Override
     protected Object getVariableValue(Map<String,Object> propertyValues) {
         return propertyValues.get(COLOR);
+    }
+
+    protected List<TypedProperty> createProperties() {
+        List<TypedProperty> props = new ArrayList<>();
+        props.add(new TypedProperty("devices", "Devices", "The devices to send the command to", TypedProperty.Type.DEVICES, Collections.singletonMap(TypedPropertyConstraint.deviceVariable, VariableConstants.COLOR)));
+        props.add(new TypedProperty(COLOR, "Color", "The color to set", TypedProperty.Type.COLOR));
+        return props;
     }
 }

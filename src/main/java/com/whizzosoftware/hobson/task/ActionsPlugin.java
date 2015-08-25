@@ -5,12 +5,15 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
-package com.whizzosoftware.hobson.actions;
+package com.whizzosoftware.hobson.task;
 
 import com.whizzosoftware.hobson.api.event.HobsonEvent;
 import com.whizzosoftware.hobson.api.plugin.AbstractHobsonPlugin;
 import com.whizzosoftware.hobson.api.property.PropertyContainer;
 import com.whizzosoftware.hobson.api.property.TypedProperty;
+import com.whizzosoftware.hobson.task.actions.*;
+import com.whizzosoftware.hobson.task.conditions.DeviceOffStateConditionClass;
+import com.whizzosoftware.hobson.task.conditions.DeviceOnStateConditionClass;
 
 /**
  * A plugin that registers some "core" actions with the runtime.
@@ -38,6 +41,10 @@ public class ActionsPlugin extends AbstractHobsonPlugin implements EventSink {
 
     @Override
     public void onStartup(PropertyContainer config) {
+        // publish default evaluator conditions
+        publishConditionClass(new DeviceOnStateConditionClass(getContext()));
+        publishConditionClass(new DeviceOffStateConditionClass(getContext()));
+
         // publish default actions
         publishActionClass(new EmailActionClass(getContext(), getHubManager()));
         publishActionClass(new LogActionClass(getContext()));
@@ -45,6 +52,11 @@ public class ActionsPlugin extends AbstractHobsonPlugin implements EventSink {
         publishActionClass(new TurnDeviceOffActionClass(getContext(), this));
         publishActionClass(new SetDeviceLevelActionClass(getContext(), this));
         publishActionClass(new SetDeviceColorActionClass(getContext(), this));
+    }
+
+    @Override
+    public void onShutdown() {
+
     }
 
     @Override
