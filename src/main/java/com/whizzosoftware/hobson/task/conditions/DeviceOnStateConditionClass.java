@@ -31,10 +31,10 @@ import java.util.List;
  * @author Dan Noguerol
  */
 public class DeviceOnStateConditionClass extends TaskConditionClass {
-    public static final String CONDITION_CLASS_ID = "deviceOn";
+    public static final String ID = "deviceOn";
 
     public DeviceOnStateConditionClass(PluginContext context) {
-        super(PropertyContainerClassContext.create(context, CONDITION_CLASS_ID), "Device(s) is/are on", "{devices} is/are on");
+        super(PropertyContainerClassContext.create(context, ID), "Device(s) is/are on", "{devices} is/are on");
     }
 
     @Override

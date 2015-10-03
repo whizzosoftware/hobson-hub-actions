@@ -41,7 +41,7 @@ public class LogActionClass extends TaskActionClass implements TaskActionExecuto
     public void executeAction(PropertyContainer pc) {
         String message = (String)pc.getPropertyValues().get(MESSAGE);
         if (message != null) {
-            logger.info(message);
+            logger.error(message);
         } else {
             logger.error("No log message specified; unable to execute log action");
         }
