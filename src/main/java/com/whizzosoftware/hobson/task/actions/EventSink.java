@@ -15,5 +15,5 @@ import com.whizzosoftware.hobson.api.event.HobsonEvent;
  * @author Dan Noguerol
  */
 public interface EventSink {
-    public void postEvent(HobsonEvent event);
+    void postEvent(HobsonEvent event);
 }
