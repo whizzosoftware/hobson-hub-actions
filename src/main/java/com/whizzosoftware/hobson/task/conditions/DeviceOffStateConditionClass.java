@@ -38,7 +38,7 @@ public class DeviceOffStateConditionClass extends TaskConditionClass {
     }
 
     @Override
-    public ConditionClassType getType() {
+    public ConditionClassType getConditionClassType() {
         return ConditionClassType.evaluator;
     }
 
