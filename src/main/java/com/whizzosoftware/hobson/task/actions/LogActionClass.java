@@ -8,6 +8,7 @@
 package com.whizzosoftware.hobson.task.actions;
 
 import com.whizzosoftware.hobson.api.plugin.PluginContext;
+import com.whizzosoftware.hobson.api.property.PropertyConstraintType;
 import com.whizzosoftware.hobson.api.property.PropertyContainer;
 import com.whizzosoftware.hobson.api.property.TypedProperty;
 import com.whizzosoftware.hobson.api.task.action.TaskActionClass;
@@ -50,7 +51,10 @@ public class LogActionClass extends TaskActionClass implements TaskActionExecuto
     @Override
     protected List<TypedProperty> createProperties() {
         List<TypedProperty> props = new ArrayList<>();
-        props.add(new TypedProperty("message", "Message", "The message added to the log file", TypedProperty.Type.STRING));
+        props.add(new TypedProperty.Builder("message", "Message", "The message added to the log file", TypedProperty.Type.STRING).
+            constraint(PropertyConstraintType.required, true).
+            build()
+        );
         return props;
     }
 }

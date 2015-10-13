@@ -9,6 +9,7 @@ package com.whizzosoftware.hobson.task.actions;
 
 import com.whizzosoftware.hobson.api.hub.HubManager;
 import com.whizzosoftware.hobson.api.plugin.PluginContext;
+import com.whizzosoftware.hobson.api.property.PropertyConstraintType;
 import com.whizzosoftware.hobson.api.property.PropertyContainer;
 import com.whizzosoftware.hobson.api.property.TypedProperty;
 import com.whizzosoftware.hobson.api.task.action.TaskActionClass;
@@ -52,9 +53,18 @@ public class EmailActionClass extends TaskActionClass implements TaskActionExecu
     @Override
     protected List<TypedProperty> createProperties() {
         List<TypedProperty> props = new ArrayList<>();
-        props.add(new TypedProperty(RECIPIENT_ADDRESS, "Recipient Address", "The e-mail address to send the message to", TypedProperty.Type.STRING));
-        props.add(new TypedProperty(SUBJECT, "Subject", "The e-mail subject line", TypedProperty.Type.STRING));
-        props.add(new TypedProperty(MESSAGE, "Message", "The e-mail body text", TypedProperty.Type.STRING));
+        props.add(new TypedProperty.Builder(RECIPIENT_ADDRESS, "Recipient Address", "The e-mail address to send the message to", TypedProperty.Type.STRING).
+            constraint(PropertyConstraintType.required, true).
+            build()
+        );
+        props.add(new TypedProperty.Builder(SUBJECT, "Subject", "The e-mail subject line", TypedProperty.Type.STRING).
+            constraint(PropertyConstraintType.required, true).
+            build()
+        );
+        props.add(new TypedProperty.Builder(MESSAGE, "Message", "The e-mail body text", TypedProperty.Type.STRING).
+            constraint(PropertyConstraintType.required, true).
+            build()
+        );
         return props;
     }
 }

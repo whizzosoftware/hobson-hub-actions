@@ -9,10 +9,7 @@ package com.whizzosoftware.hobson.task.conditions;
 
 import com.whizzosoftware.hobson.api.device.DeviceContext;
 import com.whizzosoftware.hobson.api.plugin.PluginContext;
-import com.whizzosoftware.hobson.api.property.PropertyContainer;
-import com.whizzosoftware.hobson.api.property.PropertyContainerClassContext;
-import com.whizzosoftware.hobson.api.property.TypedProperty;
-import com.whizzosoftware.hobson.api.property.TypedPropertyConstraint;
+import com.whizzosoftware.hobson.api.property.*;
 import com.whizzosoftware.hobson.api.task.condition.ConditionClassType;
 import com.whizzosoftware.hobson.api.task.condition.ConditionEvaluationContext;
 import com.whizzosoftware.hobson.api.task.condition.TaskConditionClass;
@@ -57,8 +54,16 @@ public class DeviceOffStateConditionClass extends TaskConditionClass {
 
     @Override
     protected List<TypedProperty> createProperties() {
+        List<TypedPropertyConstraint> constraints = new ArrayList<>();
+        constraints.add(new TypedPropertyConstraint(PropertyConstraintType.required, true));
+        constraints.add(new TypedPropertyConstraint(PropertyConstraintType.deviceVariable, VariableConstants.ON));
+
         List<TypedProperty> props = new ArrayList<>();
-        props.add(new TypedProperty("devices", "Devices", "The device(s) that should be off", TypedProperty.Type.DEVICES, Collections.singletonMap(TypedPropertyConstraint.deviceVariable, VariableConstants.ON)));
+        props.add(new TypedProperty.Builder("devices", "Devices", "The device(s) that should be off", TypedProperty.Type.DEVICES).
+            constraint(PropertyConstraintType.required, true).
+            constraint(PropertyConstraintType.deviceVariable, VariableConstants.ON).
+            build()
+        );
         return props;
     }
 }
