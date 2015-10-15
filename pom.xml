@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.whizzosoftware.hobson.hub</groupId>
     <artifactId>hobson-hub-actions</artifactId>
-    <version>0.6.1-SNAPSHOT</version>
+    <version>0.6.0</version>
     <packaging>bundle</packaging>
     <name>Hobson Hub Actions</name>
     <description>Provides default Hub actions.</description>
@@ -87,7 +87,7 @@
     <scm>
         <connection>scm:git:ssh://git@github.com/whizzosoftware/hobson-hub-actions.git</connection>
         <developerConnection>scm:git:ssh://git@github.com/whizzosoftware/hobson-hub-actions.git</developerConnection>
-        <tag>HEAD</tag>
+        <tag>hobson-hub-actions-0.6.0</tag>
     </scm>
     <distributionManagement>
         <repository>
