@@ -14,6 +14,7 @@ import com.whizzosoftware.hobson.api.plugin.PluginContext;
 import com.whizzosoftware.hobson.api.property.PropertyContainer;
 import com.whizzosoftware.hobson.api.task.action.TaskActionClass;
 import com.whizzosoftware.hobson.api.task.action.TaskActionExecutor;
+import com.whizzosoftware.hobson.api.variable.VariableContext;
 import com.whizzosoftware.hobson.api.variable.VariableUpdate;
 
 import java.util.ArrayList;
@@ -52,12 +53,12 @@ abstract public class AbstractVariableUpdateActionClass extends TaskActionClass 
     protected List<VariableUpdate> createVariableUpdates(Map<String, Object> propertyValues) {
         if (propertyValues.containsKey("device")) {
             DeviceContext ctx = (DeviceContext)propertyValues.get("device");
-            return Collections.singletonList(new VariableUpdate(ctx, getVariableName(), getVariableValue(propertyValues)));
+            return Collections.singletonList(new VariableUpdate(VariableContext.create(ctx, getVariableName()), getVariableValue(propertyValues)));
         } else if (propertyValues.containsKey("devices")) {
             List<VariableUpdate> results = new ArrayList<>();
             List<DeviceContext> contexts = (List<DeviceContext>)propertyValues.get("devices");
             for (DeviceContext ctx : contexts) {
-                results.add(new VariableUpdate(ctx, getVariableName(), getVariableValue(propertyValues)));
+                results.add(new VariableUpdate(VariableContext.create(ctx, getVariableName()), getVariableValue(propertyValues)));
             }
             return results;
         } else {

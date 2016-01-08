@@ -11,10 +11,7 @@ import com.whizzosoftware.hobson.api.device.DeviceContext;
 import com.whizzosoftware.hobson.api.plugin.PluginContext;
 import com.whizzosoftware.hobson.api.property.PropertyContainer;
 import com.whizzosoftware.hobson.api.task.condition.ConditionEvaluationContext;
-import com.whizzosoftware.hobson.api.variable.HobsonVariable;
-import com.whizzosoftware.hobson.api.variable.MockVariableManager;
-import com.whizzosoftware.hobson.api.variable.VariableConstants;
-import com.whizzosoftware.hobson.api.variable.VariableManager;
+import com.whizzosoftware.hobson.api.variable.*;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -90,7 +87,7 @@ public class DeviceOnStateConditionClassTest {
         }
 
         public void publishVariable(DeviceContext dctx, String name, Object value) {
-            variableManager.publishDeviceVariable(dctx, name, value, HobsonVariable.Mask.READ_ONLY);
+            variableManager.publishVariable(VariableContext.create(dctx, name), value, HobsonVariable.Mask.READ_ONLY);
         }
 
         @Override

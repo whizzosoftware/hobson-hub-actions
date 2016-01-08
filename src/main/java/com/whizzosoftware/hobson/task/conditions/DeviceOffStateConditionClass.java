@@ -13,13 +13,13 @@ import com.whizzosoftware.hobson.api.property.*;
 import com.whizzosoftware.hobson.api.task.condition.ConditionClassType;
 import com.whizzosoftware.hobson.api.task.condition.ConditionEvaluationContext;
 import com.whizzosoftware.hobson.api.task.condition.TaskConditionClass;
+import com.whizzosoftware.hobson.api.variable.VariableContext;
 import com.whizzosoftware.hobson.api.variable.HobsonVariable;
 import com.whizzosoftware.hobson.api.variable.VariableConstants;
 import com.whizzosoftware.hobson.api.variable.VariableManager;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -44,7 +44,7 @@ public class DeviceOffStateConditionClass extends TaskConditionClass {
         VariableManager variableManager = context.getVariableManager();
         Collection<DeviceContext> deviceContexts = (Collection<DeviceContext>)values.getPropertyValue("devices");
         for (DeviceContext dctx : deviceContexts) {
-            HobsonVariable v = variableManager.getDeviceVariable(dctx, VariableConstants.ON);
+            HobsonVariable v = variableManager.getVariable(VariableContext.create(dctx, VariableConstants.ON));
             if ((Boolean)v.getValue()) {
                 return false;
             }
