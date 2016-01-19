@@ -87,7 +87,7 @@ public class DeviceOnStateConditionClassTest {
         }
 
         public void publishVariable(DeviceContext dctx, String name, Object value) {
-            variableManager.publishVariable(VariableContext.create(dctx, name), value, HobsonVariable.Mask.READ_ONLY);
+            variableManager.publishVariable(VariableContext.create(dctx, name), value, HobsonVariable.Mask.READ_ONLY, System.currentTimeMillis());
         }
 
         @Override
