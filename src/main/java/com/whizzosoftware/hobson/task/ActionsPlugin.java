@@ -46,6 +46,8 @@ public class ActionsPlugin extends AbstractHobsonPlugin implements EventSink {
         publishConditionClass(new DeviceOffStateConditionClass(getContext()));
 
         // publish default actions
+        publishActionClass(new ArmDeviceActionClass(getContext(), this));
+        publishActionClass(new DisarmDeviceActionClass(getContext(), this));
         publishActionClass(new EmailActionClass(getContext(), getHubManager()));
         publishActionClass(new LogActionClass(getContext()));
         publishActionClass(new TurnDeviceOnActionClass(getContext(), this));
