@@ -10,6 +10,7 @@ package com.whizzosoftware.hobson.task.actions;
 import com.whizzosoftware.hobson.api.plugin.PluginContext;
 import com.whizzosoftware.hobson.api.property.PropertyConstraintType;
 import com.whizzosoftware.hobson.api.property.TypedProperty;
+import com.whizzosoftware.hobson.api.task.action.ActionExecutionContext;
 import com.whizzosoftware.hobson.api.variable.VariableConstants;
 
 import java.util.ArrayList;
@@ -17,8 +18,8 @@ import java.util.List;
 import java.util.Map;
 
 public class DisarmDeviceActionClass extends AbstractVariableUpdateActionClass {
-    public DisarmDeviceActionClass(PluginContext context, EventSink eventSink) {
-        super(context, "disarm", "Disarm devices", "Disarm {devices}", eventSink);
+    public DisarmDeviceActionClass(PluginContext context, ActionExecutionContext actionExecutionContext) {
+        super(context, "disarm", "Disarm devices", "Disarm {devices}", actionExecutionContext);
     }
 
     @Override

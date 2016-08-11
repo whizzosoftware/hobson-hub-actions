@@ -7,10 +7,10 @@
  *******************************************************************************/
 package com.whizzosoftware.hobson.task;
 
-import com.whizzosoftware.hobson.api.event.HobsonEvent;
 import com.whizzosoftware.hobson.api.plugin.AbstractHobsonPlugin;
 import com.whizzosoftware.hobson.api.property.PropertyContainer;
 import com.whizzosoftware.hobson.api.property.TypedProperty;
+import com.whizzosoftware.hobson.api.task.action.ActionExecutionContext;
 import com.whizzosoftware.hobson.task.actions.*;
 import com.whizzosoftware.hobson.task.conditions.DeviceOffStateConditionClass;
 import com.whizzosoftware.hobson.task.conditions.DeviceOnStateConditionClass;
@@ -20,7 +20,7 @@ import com.whizzosoftware.hobson.task.conditions.DeviceOnStateConditionClass;
  *
  * @author Dan Noguerol
  */
-public class ActionsPlugin extends AbstractHobsonPlugin implements EventSink {
+public class ActionsPlugin extends AbstractHobsonPlugin implements ActionExecutionContext {
     public ActionsPlugin(String pluginId) {
         super(pluginId);
     }
@@ -31,7 +31,7 @@ public class ActionsPlugin extends AbstractHobsonPlugin implements EventSink {
     }
 
     @Override
-    protected TypedProperty[] createSupportedProperties() {
+    protected TypedProperty[] getConfigurationPropertyTypes() {
         return null;
     }
 
@@ -59,10 +59,5 @@ public class ActionsPlugin extends AbstractHobsonPlugin implements EventSink {
     @Override
     public void onShutdown() {
 
-    }
-
-    @Override
-    public void postEvent(HobsonEvent event) {
-        fireHobsonEvent(event);
     }
 }

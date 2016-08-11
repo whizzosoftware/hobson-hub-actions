@@ -24,12 +24,14 @@ import static org.junit.Assert.*;
 public class DeviceOnStateConditionClassTest {
     @Test
     public void testEvaluateOneTrueDevice() {
+        long now = System.currentTimeMillis();
+
         PluginContext pctx = PluginContext.createLocal("plugin1");
         DeviceContext dctx = DeviceContext.create(pctx, "device1");
         DeviceOnStateConditionClass cclass = new DeviceOnStateConditionClass(pctx);
 
         MockConditionEvaluationContext cec = new MockConditionEvaluationContext();
-        cec.publishVariable(dctx, VariableConstants.ON, true);
+        cec.publishVariable(new DeviceVariable(new DeviceVariableDescription(dctx, VariableConstants.ON, DeviceVariableDescription.Mask.READ_ONLY), true, now));
 
         Map<String,Object> values = new HashMap<>();
         List<DeviceContext> deviceList = new ArrayList<>();
@@ -42,14 +44,16 @@ public class DeviceOnStateConditionClassTest {
 
     @Test
     public void testEvaluateOneTrueOneFalseDevice() {
+        long now = System.currentTimeMillis();
+
         PluginContext pctx = PluginContext.createLocal("plugin1");
         DeviceContext dctx1 = DeviceContext.create(pctx, "device1");
         DeviceContext dctx2 = DeviceContext.create(pctx, "device2");
         DeviceOnStateConditionClass cclass = new DeviceOnStateConditionClass(pctx);
 
         MockConditionEvaluationContext cec = new MockConditionEvaluationContext();
-        cec.publishVariable(dctx1, VariableConstants.ON, true);
-        cec.publishVariable(dctx2, VariableConstants.ON, false);
+        cec.publishVariable(new DeviceVariable(new DeviceVariableDescription(dctx1, VariableConstants.ON, DeviceVariableDescription.Mask.READ_ONLY), true, now));
+        cec.publishVariable(new DeviceVariable(new DeviceVariableDescription(dctx1, VariableConstants.ON, DeviceVariableDescription.Mask.READ_ONLY), false, now));
 
         Map<String, Object> values = new HashMap<>();
         List<DeviceContext> deviceList = new ArrayList<>();
@@ -63,12 +67,14 @@ public class DeviceOnStateConditionClassTest {
 
     @Test
     public void testEvaluateOneFalseDevice() {
+        long now = System.currentTimeMillis();
+
         PluginContext pctx = PluginContext.createLocal("plugin1");
         DeviceContext dctx = DeviceContext.create(pctx, "device1");
         DeviceOnStateConditionClass cclass = new DeviceOnStateConditionClass(pctx);
 
         MockConditionEvaluationContext cec = new MockConditionEvaluationContext();
-        cec.publishVariable(dctx, VariableConstants.ON, false);
+        cec.publishVariable(new DeviceVariable(new DeviceVariableDescription(dctx, VariableConstants.ON, DeviceVariableDescription.Mask.READ_ONLY), false, now));
 
         Map<String,Object> values = new HashMap<>();
         List<DeviceContext> deviceList = new ArrayList<>();
@@ -80,19 +86,15 @@ public class DeviceOnStateConditionClassTest {
     }
 
     public class MockConditionEvaluationContext implements ConditionEvaluationContext {
-        private MockVariableManager variableManager;
-
-        public MockConditionEvaluationContext() {
-            variableManager = new MockVariableManager();
-        }
-
-        public void publishVariable(DeviceContext dctx, String name, Object value) {
-            variableManager.publishVariable(VariableContext.create(dctx, name), value, HobsonVariable.Mask.READ_ONLY, System.currentTimeMillis());
-        }
+        private Map<DeviceVariableContext,DeviceVariable> variables = new HashMap<>();
 
         @Override
-        public VariableManager getVariableManager() {
-            return variableManager;
+        public DeviceVariable getDeviceVariable(DeviceVariableContext dvctx) {
+            return variables.get(dvctx);
+        }
+
+        public void publishVariable(DeviceVariable v) {
+            variables.put(v.getContext(), v);
         }
     }
 }
