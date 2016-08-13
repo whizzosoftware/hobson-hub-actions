@@ -14,6 +14,7 @@ import com.whizzosoftware.hobson.api.task.action.ActionExecutionContext;
 import com.whizzosoftware.hobson.task.actions.*;
 import com.whizzosoftware.hobson.task.conditions.DeviceOffStateConditionClass;
 import com.whizzosoftware.hobson.task.conditions.DeviceOnStateConditionClass;
+import com.whizzosoftware.hobson.task.conditions.ManualTaskExecutionConditionClass;
 
 /**
  * A plugin that registers some "core" actions with the runtime.
@@ -41,6 +42,9 @@ public class ActionsPlugin extends AbstractHobsonPlugin implements ActionExecuti
 
     @Override
     public void onStartup(PropertyContainer config) {
+        // publish trigger conditions
+        publishConditionClass(new ManualTaskExecutionConditionClass(getContext()));
+
         // publish default evaluator conditions
         publishConditionClass(new DeviceOnStateConditionClass(getContext()));
         publishConditionClass(new DeviceOffStateConditionClass(getContext()));
