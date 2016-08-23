@@ -10,7 +10,6 @@ package com.whizzosoftware.hobson.task.actions;
 import com.whizzosoftware.hobson.api.plugin.PluginContext;
 import com.whizzosoftware.hobson.api.property.TypedProperty;
 import com.whizzosoftware.hobson.api.property.PropertyConstraintType;
-import com.whizzosoftware.hobson.api.task.action.ActionExecutionContext;
 import com.whizzosoftware.hobson.api.variable.VariableConstants;
 
 import java.util.ArrayList;
@@ -25,8 +24,8 @@ import java.util.Map;
 public class SetDeviceColorActionClass extends AbstractVariableUpdateActionClass {
     public static final String COLOR = "color";
 
-    public SetDeviceColorActionClass(PluginContext context, ActionExecutionContext actionExecutionContext) {
-        super(context, "setColor", "Set bulb colors", "Set {devices} to {" + COLOR + "}", actionExecutionContext);
+    public SetDeviceColorActionClass(PluginContext context, EventSink eventSink) {
+        super(context, "setColor", "Set bulb colors", "Set {devices} to {" + COLOR + "}", eventSink);
     }
 
     @Override

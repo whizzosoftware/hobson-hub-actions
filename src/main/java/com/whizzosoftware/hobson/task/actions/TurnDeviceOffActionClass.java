@@ -10,7 +10,6 @@ package com.whizzosoftware.hobson.task.actions;
 import com.whizzosoftware.hobson.api.plugin.PluginContext;
 import com.whizzosoftware.hobson.api.property.TypedProperty;
 import com.whizzosoftware.hobson.api.property.PropertyConstraintType;
-import com.whizzosoftware.hobson.api.task.action.ActionExecutionContext;
 import com.whizzosoftware.hobson.api.variable.VariableConstants;
 
 import java.util.ArrayList;
@@ -24,8 +23,8 @@ import java.util.Map;
  */
 public class TurnDeviceOffActionClass extends AbstractVariableUpdateActionClass {
 
-    public TurnDeviceOffActionClass(PluginContext context, ActionExecutionContext actionExecutionContext) {
-        super(context, "turnOff", "Turn off bulbs or switches", "Turn off {devices}", actionExecutionContext);
+    public TurnDeviceOffActionClass(PluginContext context, EventSink eventSink) {
+        super(context, "turnOff", "Turn off bulbs or switches", "Turn off {devices}", eventSink);
     }
 
     @Override
