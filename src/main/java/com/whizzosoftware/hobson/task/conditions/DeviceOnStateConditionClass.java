@@ -1,10 +1,12 @@
-/*******************************************************************************
+/*
+ *******************************************************************************
  * Copyright (c) 2015 Whizzo Software, LLC.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *******************************************************************************/
+ *******************************************************************************
+*/
 package com.whizzosoftware.hobson.task.conditions;
 
 import com.whizzosoftware.hobson.api.device.DeviceContext;
@@ -13,10 +15,9 @@ import com.whizzosoftware.hobson.api.property.*;
 import com.whizzosoftware.hobson.api.task.condition.ConditionClassType;
 import com.whizzosoftware.hobson.api.task.condition.ConditionEvaluationContext;
 import com.whizzosoftware.hobson.api.task.condition.TaskConditionClass;
-import com.whizzosoftware.hobson.api.variable.VariableContext;
-import com.whizzosoftware.hobson.api.variable.HobsonVariable;
+import com.whizzosoftware.hobson.api.variable.DeviceVariableContext;
+import com.whizzosoftware.hobson.api.variable.DeviceVariableState;
 import com.whizzosoftware.hobson.api.variable.VariableConstants;
-import com.whizzosoftware.hobson.api.variable.VariableManager;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -28,7 +29,7 @@ import java.util.List;
  * @author Dan Noguerol
  */
 public class DeviceOnStateConditionClass extends TaskConditionClass {
-    public static final String ID = "deviceOn";
+    private static final String ID = "deviceOn";
 
     public DeviceOnStateConditionClass(PluginContext context) {
         super(PropertyContainerClassContext.create(context, ID), "Device(s) is/are on", "{devices} is/are on");
@@ -41,10 +42,9 @@ public class DeviceOnStateConditionClass extends TaskConditionClass {
 
     @Override
     public boolean evaluate(ConditionEvaluationContext context, PropertyContainer values) {
-        VariableManager variableManager = context.getVariableManager();
         Collection<DeviceContext> deviceContexts = (Collection<DeviceContext>)values.getPropertyValue("devices");
         for (DeviceContext dctx : deviceContexts) {
-            HobsonVariable v = variableManager.getVariable(VariableContext.create(dctx, VariableConstants.ON));
+            DeviceVariableState v = context.getDeviceVariableState(DeviceVariableContext.create(dctx, VariableConstants.ON));
             if (!(Boolean)v.getValue()) {
                 return false;
             }

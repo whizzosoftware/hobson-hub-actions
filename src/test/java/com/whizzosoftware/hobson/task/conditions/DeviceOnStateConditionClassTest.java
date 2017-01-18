@@ -8,6 +8,7 @@
 package com.whizzosoftware.hobson.task.conditions;
 
 import com.whizzosoftware.hobson.api.device.DeviceContext;
+import com.whizzosoftware.hobson.api.hub.HubContext;
 import com.whizzosoftware.hobson.api.plugin.PluginContext;
 import com.whizzosoftware.hobson.api.property.PropertyContainer;
 import com.whizzosoftware.hobson.api.task.condition.ConditionEvaluationContext;
@@ -32,7 +33,7 @@ public class DeviceOnStateConditionClassTest {
         DeviceOnStateConditionClass cclass = new DeviceOnStateConditionClass(pctx);
 
         MockConditionEvaluationContext cec = new MockConditionEvaluationContext();
-        cec.publishVariable(new DeviceVariable(new DeviceVariableDescription(dctx, VariableConstants.ON, DeviceVariableDescription.Mask.READ_ONLY), true, now));
+        cec.publishVariable(new DeviceProxyVariable(DeviceVariableContext.create(dctx, VariableConstants.ON), VariableMask.READ_ONLY, null, true, now));
 
         Map<String,Object> values = new HashMap<>();
         List<DeviceContext> deviceList = new ArrayList<>();
@@ -53,8 +54,8 @@ public class DeviceOnStateConditionClassTest {
         DeviceOnStateConditionClass cclass = new DeviceOnStateConditionClass(pctx);
 
         MockConditionEvaluationContext cec = new MockConditionEvaluationContext();
-        cec.publishVariable(new DeviceVariable(new DeviceVariableDescription(dctx1, VariableConstants.ON, DeviceVariableDescription.Mask.READ_ONLY), true, now));
-        cec.publishVariable(new DeviceVariable(new DeviceVariableDescription(dctx1, VariableConstants.ON, DeviceVariableDescription.Mask.READ_ONLY), false, now));
+        cec.publishVariable(new DeviceProxyVariable(DeviceVariableContext.create(dctx1, VariableConstants.ON), VariableMask.READ_ONLY, null, true, now));
+        cec.publishVariable(new DeviceProxyVariable(DeviceVariableContext.create(dctx2, VariableConstants.ON), VariableMask.READ_ONLY, null, false, now));
 
         Map<String, Object> values = new HashMap<>();
         List<DeviceContext> deviceList = new ArrayList<>();
@@ -75,7 +76,7 @@ public class DeviceOnStateConditionClassTest {
         DeviceOnStateConditionClass cclass = new DeviceOnStateConditionClass(pctx);
 
         MockConditionEvaluationContext cec = new MockConditionEvaluationContext();
-        cec.publishVariable(new DeviceVariable(new DeviceVariableDescription(dctx, VariableConstants.ON, DeviceVariableDescription.Mask.READ_ONLY), false, now));
+        cec.publishVariable(new DeviceProxyVariable(DeviceVariableContext.create(dctx, VariableConstants.ON), VariableMask.READ_ONLY, null, false, now));
 
         Map<String,Object> values = new HashMap<>();
         List<DeviceContext> deviceList = new ArrayList<>();
@@ -87,15 +88,20 @@ public class DeviceOnStateConditionClassTest {
     }
 
     public class MockConditionEvaluationContext implements ConditionEvaluationContext {
-        private Map<DeviceVariableContext,DeviceVariable> variables = new HashMap<>();
+        private Map<DeviceVariableContext,DeviceProxyVariable> variables = new HashMap<>();
 
-        @Override
-        public DeviceVariable getDeviceVariable(DeviceVariableContext dvctx) {
-            return variables.get(dvctx);
+        public void publishVariable(DeviceProxyVariable v) {
+            variables.put(v.getContext(), v);
         }
 
-        public void publishVariable(DeviceVariable v) {
-            variables.put(v.getContext(), v);
+        @Override
+        public PropertyContainer getHubConfiguration(HubContext ctx) {
+            return null;
+        }
+
+        @Override
+        public DeviceVariableState getDeviceVariableState(DeviceVariableContext dvctx) {
+            return variables.get(dvctx).getState();
         }
     }
     */
