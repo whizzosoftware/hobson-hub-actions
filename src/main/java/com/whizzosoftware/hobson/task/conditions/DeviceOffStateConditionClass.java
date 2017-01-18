@@ -1,10 +1,12 @@
-/*******************************************************************************
+/*
+ *******************************************************************************
  * Copyright (c) 2015 Whizzo Software, LLC.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *******************************************************************************/
+ *******************************************************************************
+*/
 package com.whizzosoftware.hobson.task.conditions;
 
 import com.whizzosoftware.hobson.api.device.DeviceContext;
@@ -13,8 +15,8 @@ import com.whizzosoftware.hobson.api.property.*;
 import com.whizzosoftware.hobson.api.task.condition.ConditionClassType;
 import com.whizzosoftware.hobson.api.task.condition.ConditionEvaluationContext;
 import com.whizzosoftware.hobson.api.task.condition.TaskConditionClass;
-import com.whizzosoftware.hobson.api.variable.DeviceVariable;
 import com.whizzosoftware.hobson.api.variable.DeviceVariableContext;
+import com.whizzosoftware.hobson.api.variable.DeviceVariableState;
 import com.whizzosoftware.hobson.api.variable.VariableConstants;
 
 import java.util.ArrayList;
@@ -42,8 +44,9 @@ public class DeviceOffStateConditionClass extends TaskConditionClass {
     public boolean evaluate(ConditionEvaluationContext context, PropertyContainer values) {
         Collection<DeviceContext> deviceContexts = (Collection<DeviceContext>)values.getPropertyValue("devices");
         for (DeviceContext dctx : deviceContexts) {
-            DeviceVariable v = context.getDeviceVariable(DeviceVariableContext.create(dctx, VariableConstants.ON));
-            if ((Boolean)v.getValue()) {
+            DeviceVariableContext dvctx = DeviceVariableContext.create(dctx, VariableConstants.ON);
+            DeviceVariableState s = context.getDeviceVariableState(dvctx);
+            if ((Boolean)s.getValue()) {
                 return false;
             }
         }

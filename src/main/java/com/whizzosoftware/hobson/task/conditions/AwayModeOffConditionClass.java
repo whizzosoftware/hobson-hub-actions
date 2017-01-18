@@ -9,6 +9,8 @@
 */
 package com.whizzosoftware.hobson.task.conditions;
 
+import com.whizzosoftware.hobson.api.hub.HubConfigurationClass;
+import com.whizzosoftware.hobson.api.hub.HubContext;
 import com.whizzosoftware.hobson.api.plugin.PluginContext;
 import com.whizzosoftware.hobson.api.property.PropertyContainer;
 import com.whizzosoftware.hobson.api.property.PropertyContainerClassContext;
@@ -20,27 +22,22 @@ import com.whizzosoftware.hobson.api.task.condition.TaskConditionClass;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * A trigger condition class that is a NO-OP for manual execution.
- *
- * @author Dan Noguerol
- */
-public class ManualTaskExecutionConditionClass extends TaskConditionClass {
-    public static final String ID = "manual";
+public class AwayModeOffConditionClass extends TaskConditionClass {
+    private static final String ID = "notAway";
 
-    public ManualTaskExecutionConditionClass(PluginContext context) {
-        super(PropertyContainerClassContext.create(context, ID), "The task is manually executed", "The task is manually executed");
+    public AwayModeOffConditionClass(PluginContext context) {
+        super(PropertyContainerClassContext.create(context, ID), "Away mode off", "The hub is not in away mode");
     }
-
 
     @Override
     public ConditionClassType getConditionClassType() {
-        return ConditionClassType.trigger;
+        return ConditionClassType.evaluator;
     }
 
     @Override
     public boolean evaluate(ConditionEvaluationContext context, PropertyContainer values) {
-        return false;
+        PropertyContainer pc = context.getHubConfiguration(HubContext.createLocal());
+        return !pc.getBooleanPropertyValue(HubConfigurationClass.AWAY);
     }
 
     @Override
