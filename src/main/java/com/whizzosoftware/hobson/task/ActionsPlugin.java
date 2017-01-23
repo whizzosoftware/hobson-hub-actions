@@ -41,8 +41,8 @@ public class ActionsPlugin extends AbstractHobsonPlugin {
     }
 
     @Override
-    protected TypedProperty[] getConfigurationPropertyTypes() {
-        return null;
+    public PluginType getType() {
+        return PluginType.CORE;
     }
 
     @Override
@@ -69,12 +69,15 @@ public class ActionsPlugin extends AbstractHobsonPlugin {
 
     @Override
     public void onShutdown() {
-
     }
 
     @Override
-    public PluginType getType() {
-        return PluginType.CORE;
+    public void onPluginConfigurationUpdate(PropertyContainer config) {
+    }
+
+    @Override
+    protected TypedProperty[] getConfigurationPropertyTypes() {
+        return null;
     }
 
     public void doSetDeviceVariables(Map<DeviceVariableContext, Object> values) {
