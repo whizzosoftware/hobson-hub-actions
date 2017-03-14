@@ -28,6 +28,7 @@ import java.util.List;
  *
  * @author Dan Noguerol
  */
+@SuppressWarnings("unchecked")
 public class DeviceOffStateConditionClass extends TaskConditionClass {
     private static final String ID = "deviceOff";
 

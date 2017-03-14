@@ -24,6 +24,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@SuppressWarnings("unchecked")
 abstract public class AbstractVariableUpdateAction extends SingleAction {
 
     AbstractVariableUpdateAction(PluginContext pluginContext, ActionExecutionContext executionContext, EventLoopExecutor executor) {
